@@ -131,7 +131,7 @@ function InitDatabase(filename) {
 }
 
 function GetName(number) {
-    return database.data.callername[number] || '';
+    return database.data.callername[number] || number;
 }
 
 function SetName(number, name) {
@@ -155,6 +155,8 @@ function MakeDateTimeString(date, time) {
 }
 
 function FilterNameNumber(text) {
+    if (!text) return '';
+
     text = text.trim();
     if (text == 'O') {
         return '';
@@ -166,13 +168,14 @@ function ParseCallLine(line) {
     // Examples of caller ID data:
     // B-DATE = 011916--TIME = 1616--NMBR = 8774845967--NAME = TOLL FREE CALLE--
     // --DATE = 011916--TIME = 1623--NMBR = O--NAME = O--
-    var m = line.match(/^([WB\-])-DATE = (\d{6})--TIME = (\d{4})--NMBR = ([^\-]*)--NAME = ([^\-]*)--$/);
+    // --DATE = 011916--TIME = 1623--NMBR = 8774845967--
+    var m = line.match(/^([WB\-])-DATE = (\d{6})--TIME = (\d{4})--NMBR = ([^\-]*)--(NAME = ([^\-]*)--)?$/);
     if (m) {
         return {
             status:   {W:'safe', B:'blocked'}[m[1]] || 'neutral',
             when:     MakeDateTimeString(m[2], m[3]),
             number:   FilterNameNumber(m[4]),
-            callid:   FilterNameNumber(m[5])
+            callid:   FilterNameNumber(m[6])
         };
     }
     return null;
