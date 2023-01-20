@@ -71,13 +71,14 @@
     };
 
     var HistoryDisplayModeIndex = 0;
+    var HistoryDisplayModeClassRing = ['bi-telephone-inbound-fill', 'bi-check-circle-fill', 'bi-x-circle-fill', 'bi-question-circle-fill'];
     var HistoryDisplayModeRing = ['all', 'safe', 'blocked', 'neutral'];
 
     function HistoryDisplayModeIcon() {
         // Choose which icon to display in the upper left corner
         // of the history page, depending on which mode the user
         // has selected by clicking on that icon.
-        return HistoryDisplayModeRing[HistoryDisplayModeIndex] + '.png';
+        return HistoryDisplayModeClassRing[HistoryDisplayModeIndex];
     }
 
     function CycleHistoryDisplayMode() {
@@ -437,7 +438,7 @@
     }
 
     function BlockStatusClassName(status) {
-        return {safe:'SafeCall', blocked:'BlockedCall'}[status] || 'NeutralCall';
+        return {safe:'table-success', blocked:'table-danger'}[status] || 'table-primary';
     }
 
     function ZeroPad(n) {
@@ -569,11 +570,20 @@
 
     function IconCellForStatus(status) {
         var iconCell = document.createElement('td');
-        var iconImg = document.createElement('img');
-        iconImg.setAttribute('src', status + '.png');
-        iconImg.setAttribute('width', '24');
-        iconImg.setAttribute('height', '24');
-        iconCell.appendChild(iconImg);
+        var icon = document.createElement('i');
+        switch (status) {
+            case 'safe':
+                icon.className = 'bi-check-circle-fill text-success';
+                break;
+            case 'blocked':
+                icon.className = 'bi-x-circle-fill text-danger';
+                break;
+            default :
+                icon.className = 'bi-question-circle-fill text-primary';
+                break;
+        }
+
+        iconCell.appendChild(icon);
         iconCell.className = BlockStatusClassName(status);
         return iconCell;
     }
@@ -582,22 +592,20 @@
         var rowlist = [];
         var recent = PrevPoll.callerid.data.calls;
         var table = document.createElement('table');
-        table.setAttribute('class', 'RecentCallTable');
+        table.setAttribute('class', 'RecentCallTable table table-hover align-middle');
 
         var thead = document.createElement('thead');
         var hrow = document.createElement('tr');
 
         var hcell_icon = document.createElement('th');
         hcell_icon.className = 'IconColumn';
-        var toggleIconImage = document.createElement('img');
-        toggleIconImage.setAttribute('src', HistoryDisplayModeIcon());
-        toggleIconImage.setAttribute('width', '24');
-        toggleIconImage.setAttribute('height', '24');
-        hcell_icon.appendChild(toggleIconImage);
+        var toggleIcon = document.createElement('i');
+        toggleIcon.className = HistoryDisplayModeIcon();
+        hcell_icon.appendChild(toggleIcon);
         hcell_icon.onclick = function() {
             // Cycle through the next display mode.
             CycleHistoryDisplayMode();
-            toggleIconImage.setAttribute('src', HistoryDisplayModeIcon());
+            toggleIcon.className = HistoryDisplayModeIcon();
             UpdateRowDisplay(rowlist);
         }
         hrow.appendChild(hcell_icon);
@@ -613,10 +621,8 @@
 
         var hcell_new = document.createElement('th');
         hcell_new.className = 'IconColumn';
-        var newIcon = document.createElement('img');
-        newIcon.setAttribute('src', 'new.png');
-        newIcon.setAttribute('width', '24');
-        newIcon.setAttribute('height', '24');
+        var newIcon = document.createElement('i');
+        newIcon.className = 'bi-journal-x';
         hcell_new.appendChild(newIcon);
         hcell_new.onclick = CreateNewCaller;
         hrow.appendChild(hcell_new);

@@ -1,130 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html data-bs-theme="dark">
 <head>
     <meta charset="utf-8">
     <title>Junk Call Blocker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="jcclient.js"></script>
 </head>
 <body>
-    <!-- RecentCallsDiv holds a script-generated table of caller ID history. -->
-    <div id="RecentCallsDiv"></div>
+    <div class="container">
+        <!-- RecentCallsDiv holds a script-generated table of caller ID history. -->
+        <div class="row" id="RecentCallsDiv"></div>
 
-    <!-- CreateEditNumberDiv allows manual entry of phone numbers. Also displays phone book. -->
-    <div id="CreateEditNumberDiv">
-        <div class="NavSection">
-            <span id="CancelCreateEditButton" class="NavButton">&laquo;&nbsp;Back</span>
-            <span id="SettingsButton" class="NavButton RightButton">Settings&nbsp;&raquo;</span>
-        </div>
-
-        <table class="TargetTable" border="0">
-            <tr>
-                <td>Number:</td>
-                <td><input id="NumberEditBox" class="EditBox" type="tel" value="" size="16" maxlength="15"></td>
-            </tr>
-        </table>
-
-        <div class="NavSection">
-            <span id="TryCreateEditButton" class="NavButton">Create/Edit&nbsp;&raquo;</span>
-        </div>
-
-        <div id="PhoneBookDiv">
-        </div>
-    </div>
-
-    <!-- TargetCallDiv shows detailed information about a particular caller and allows editing that caller. -->
-    <div id="TargetCallDiv">
-        <div class="NavSection">
-            <span id="BackToListButton" class="NavButton">&laquo;&nbsp;Back</span>
-        </div>
-
-        <table class="TargetTable" border="0">
-            <tr id="TargetNumberRow">
-                <td>Number:</td>
-                <td><div id="TargetNumberDiv"></div></td>
-            </tr>
-
-            <tr id="TargetCallerIdRow">
-                <td>CID:</td>
-                <td><div id="TargetCallerIdDiv"></div></td>
-            </tr>
-
-            <tr id="TargetNameRow">
-                <td>Name:</td>
-                <td><input id="TargetNameEditBox" class="EditBox" type="text" value="" size="20" maxlength="80"></td>
-            </tr>
-        </table>
-
-        <div class="NavSection">
-            <form action="">
-                <div class="NavSection NavButton">
-                    <input type="radio" name="TargetStatus" value="Safe" id="TargetRadioButtonSafe">
-                    <label for="TargetRadioButtonSafe">Safe</label>
-                </div>
-
-                <div class="NavSection NavButton">
-                    <input type="radio" name="TargetStatus" value="Neutral" id="TargetRadioButtonNeutral">
-                    <label for="TargetRadioButtonNeutral">Neutral</label>
-                </div>
-
-                <div class="NavSection NavButton">
-                    <input type="radio" name="TargetStatus" value="Blocked" id="TargetRadioButtonBlocked">
-                    <label for="TargetRadioButtonBlocked">Blocked</label>
-                </div>
-            </form>
-        </div>
-
-        <div id="TargetHistoryDiv"></div>
-
-        <div class="NavSection">
-            <span id="DeleteTargetButton" class="NavButton">Delete this entry</span>
-        </div>
-    </div>
-
-    <!-- SettingsDiv allows user to configure client-side settings. -->
-    <div id="SettingsDiv">
-        <div class="NavSection">
+        <!-- CreateEditNumberDiv allows manual entry of phone numbers. Also displays phone book. -->
+        <div class="row" id="CreateEditNumberDiv">
             <div class="NavSection">
-                <span id="SettingsBackButton" class="NavButton">&laquo;&nbsp;Back</span>
+                <span id="CancelCreateEditButton" class="NavButton">&laquo;&nbsp;Back</span>
+                <span id="SettingsButton" class="NavButton RightButton">Settings&nbsp;&raquo;</span>
+            </div>
+
+            <table class="TargetTable" border="0">
+                <tr>
+                    <td>Number:</td>
+                    <td><input id="NumberEditBox" class="EditBox" type="tel" value="" size="16" maxlength="15"></td>
+                </tr>
+            </table>
+
+            <div class="NavSection">
+                <span id="TryCreateEditButton" class="NavButton">Create/Edit&nbsp;&raquo;</span>
+            </div>
+
+            <div id="PhoneBookDiv">
             </div>
         </div>
 
-        <hr>
+        <!-- TargetCallDiv shows detailed information about a particular caller and allows editing that caller. -->
+        <div class="row" id="TargetCallDiv">
+            <div class="NavSection">
+                <span id="BackToListButton" class="NavButton">&laquo;&nbsp;Back</span>
+            </div>
 
-        <div>
-            <div class="SettingsTitle">Call History Limit</div>
+            <table class="TargetTable" border="0">
+                <tr id="TargetNumberRow">
+                    <td>Number:</td>
+                    <td><div id="TargetNumberDiv"></div></td>
+                </tr>
 
-            <form action="">
-                <div class="SettingsButton">
-                    <input type="radio" name="HistoryLimit" value="30" id="HistoryLimitButton1">
-                    <label for="HistoryLimit">30</label>
-                </div>
+                <tr id="TargetCallerIdRow">
+                    <td>CID:</td>
+                    <td><div id="TargetCallerIdDiv"></div></td>
+                </tr>
 
-                <div class="SettingsButton">
-                    <input type="radio" name="HistoryLimit" value="100" id="HistoryLimitButton2">
-                    <label for="HistoryLimit">100</label>
-                </div>
+                <tr id="TargetNameRow">
+                    <td>Name:</td>
+                    <td><input id="TargetNameEditBox" class="EditBox" type="text" value="" size="20" maxlength="80"></td>
+                </tr>
+            </table>
 
-                <div class="SettingsButton">
-                    <input type="radio" name="HistoryLimit" value="500" id="HistoryLimitButton3">
-                    <label for="HistoryLimit">500</label>
-                </div>
+            <div class="NavSection">
+                <form action="">
+                    <div class="NavSection NavButton">
+                        <input type="radio" name="TargetStatus" value="Safe" id="TargetRadioButtonSafe">
+                        <label for="TargetRadioButtonSafe">Safe</label>
+                    </div>
 
-                <div class="SettingsButton">
-                    <input type="radio" name="HistoryLimit" value="1000000000" id="HistoryLimitButton4">
-                    <label for="HistoryLimit">All</label>
-                </div>
-            </form>
+                    <div class="NavSection NavButton">
+                        <input type="radio" name="TargetStatus" value="Neutral" id="TargetRadioButtonNeutral">
+                        <label for="TargetRadioButtonNeutral">Neutral</label>
+                    </div>
+
+                    <div class="NavSection NavButton">
+                        <input type="radio" name="TargetStatus" value="Blocked" id="TargetRadioButtonBlocked">
+                        <label for="TargetRadioButtonBlocked">Blocked</label>
+                    </div>
+                </form>
+            </div>
+
+            <div id="TargetHistoryDiv"></div>
+
+            <div class="NavSection">
+                <span id="DeleteTargetButton" class="NavButton">Delete this entry</span>
+            </div>
         </div>
 
-        <hr>
-    </div>
+        <!-- SettingsDiv allows user to configure client-side settings. -->
+        <div class="row" id="SettingsDiv">
+            <div class="NavSection">
+                <div class="NavSection">
+                    <span id="SettingsBackButton" class="NavButton">&laquo;&nbsp;Back</span>
+                </div>
+            </div>
 
-    <!-- LostContactDiv is displayed while we are unable to communicate with the jcadmin server. -->
-    <div id="LostContactDiv" class="LostContact">
-        <h1>Lost Contact with Server</h1>
-        <div><img src="offline.png" width="128" height="128"></div>
+            <hr>
+
+            <div>
+                <div class="SettingsTitle">Call History Limit</div>
+
+                <form action="">
+                    <div class="SettingsButton">
+                        <input type="radio" name="HistoryLimit" value="30" id="HistoryLimitButton1">
+                        <label for="HistoryLimit">30</label>
+                    </div>
+
+                    <div class="SettingsButton">
+                        <input type="radio" name="HistoryLimit" value="100" id="HistoryLimitButton2">
+                        <label for="HistoryLimit">100</label>
+                    </div>
+
+                    <div class="SettingsButton">
+                        <input type="radio" name="HistoryLimit" value="500" id="HistoryLimitButton3">
+                        <label for="HistoryLimit">500</label>
+                    </div>
+
+                    <div class="SettingsButton">
+                        <input type="radio" name="HistoryLimit" value="1000000000" id="HistoryLimitButton4">
+                        <label for="HistoryLimit">All</label>
+                    </div>
+                </form>
+            </div>
+
+            <hr>
+        </div>
+
+        <!-- LostContactDiv is displayed while we are unable to communicate with the jcadmin server. -->
+        <div id="LostContactDiv" class="LostContact row">
+            <h1>Lost Contact with Server</h1>
+            <div><img src="offline.png" width="128" height="128"></div>
+        </div>
     </div>
 </body>
 </html>
