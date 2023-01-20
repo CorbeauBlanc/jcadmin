@@ -592,7 +592,7 @@
         var rowlist = [];
         var recent = PrevPoll.callerid.data.calls;
         var table = document.createElement('table');
-        table.setAttribute('class', 'RecentCallTable table table-hover align-middle');
+        table.className = 'RecentCallTable table table-hover align-middle';
 
         var thead = document.createElement('thead');
         var hrow = document.createElement('tr');
@@ -678,7 +678,7 @@
     function SortableColumnText(label, sortfunc) {
         if (sortfunc === PhoneNumbersInOrder) {
             // Put an arrow on this column to indicate that we are sorting by it.
-            var arrow = (PhoneBookSortDirection > 0) ? '&dArr;' : '&uArr;';
+            var arrow = (PhoneBookSortDirection > 0) ? '▼' : '▲';
             return label + '&nbsp;' + arrow;
         }
         return label;
@@ -760,11 +760,12 @@
         TryToCreateEditNumber(number);
     }
 
-    var PhoneBookStatusFilter = ['all', 'safe', 'neutral', 'blocked'];
+    var PhoneBookStatusFilter = HistoryDisplayModeRing;
+    var PhoneBookStatusFilterClass = HistoryDisplayModeClassRing;
     var PhoneBookStatusFilterIndex = 0;
 
     function UpdateFilterIcon(toggleIconImage) {
-        toggleIconImage.setAttribute('src', PhoneBookStatusFilter[PhoneBookStatusFilterIndex] + '.png');
+        toggleIconImage.className = PhoneBookStatusFilterClass[PhoneBookStatusFilterIndex];
     }
 
     function UpdatePhoneBookRowDisplay(rowlist) {
@@ -794,23 +795,25 @@
         var book = SortedPhoneBook();
         var phoneBookDiv = document.getElementById('PhoneBookDiv');
         var table = document.createElement('table');
+        table.className = 'table table-hover align-middle';
         ClearElement(phoneBookDiv);
         phoneBookDiv.appendChild(table);
 
+        var thead = document.createElement('thead')
+        table.appendChild(thead);
+
         var hrow = document.createElement('tr');
-        table.appendChild(hrow);
+        thead.appendChild(hrow);
 
         var hStatusCell = document.createElement('th');
         hStatusCell.className = 'IconColumn';
-        var toggleIconImage = document.createElement('img');
-        UpdateFilterIcon(toggleIconImage);
-        toggleIconImage.setAttribute('width', '24');
-        toggleIconImage.setAttribute('height', '24');
-        hStatusCell.appendChild(toggleIconImage);
+        var toggleIcon = document.createElement('i');
+        UpdateFilterIcon(toggleIcon);
+        hStatusCell.appendChild(toggleIcon);
         hStatusCell.onclick = function() {
             // Cycle through status filters for displaying different subsets of rows.
             PhoneBookStatusFilterIndex = (1 + PhoneBookStatusFilterIndex) % PhoneBookStatusFilter.length;
-            UpdateFilterIcon(toggleIconImage);
+            UpdateFilterIcon(toggleIcon);
             UpdatePhoneBookRowDisplay(rowlist);
         }
         hrow.appendChild(hStatusCell);
@@ -838,6 +841,9 @@
         }
         hrow.appendChild(hNameCell);
 
+        var tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+
         for (var i=0; i < book.length; ++i) {
             var entry = book[i];
 
@@ -850,7 +856,7 @@
 
             var countCell = document.createElement('td');
             countCell.textContent = entry.count;
-            countCell.className = 'CallCountColumn';
+            countCell.className = `${BlockStatusClassName(detail.status)} CallCountColumn table-primary text-center`;
             row.appendChild(countCell);
 
             var numberCell = document.createElement('td');
@@ -866,7 +872,7 @@
             row.setAttribute('data-phone-number', entry.number);
             row.onclick = OnPhoneBookRowClicked;
 
-            table.appendChild(row);
+            tbody.appendChild(row);
             rowlist.push(row);
         }
 

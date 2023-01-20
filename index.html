@@ -15,13 +15,13 @@
         <div class="row" id="RecentCallsDiv"></div>
 
         <!-- CreateEditNumberDiv allows manual entry of phone numbers. Also displays phone book. -->
-        <div class="row" id="CreateEditNumberDiv">
-            <div class="NavSection">
+        <div id="CreateEditNumberDiv">
+            <div class="NavSection row">
                 <span id="CancelCreateEditButton" class="NavButton">&laquo;&nbsp;Back</span>
                 <span id="SettingsButton" class="NavButton RightButton">Settings&nbsp;&raquo;</span>
             </div>
 
-            <table class="TargetTable" border="0">
+            <table class="TargetTable row">
                 <tr>
                     <td>Number:</td>
                     <td><input id="NumberEditBox" class="EditBox" type="tel" value="" size="16" maxlength="15"></td>
@@ -32,7 +32,7 @@
                 <span id="TryCreateEditButton" class="NavButton">Create/Edit&nbsp;&raquo;</span>
             </div>
 
-            <div id="PhoneBookDiv">
+            <div class="row" id="PhoneBookDiv">
             </div>
         </div>
 

@@ -6,7 +6,7 @@ table.table thead {
     font-size: 1.5rem;
 }
 
-table.table thead i[class^="bi"], table.table tbody tr {
+table.table thead i[class^="bi"], table.table tbody tr, #PhoneBookDiv table.table thead th {
     cursor: pointer;
 }
 
