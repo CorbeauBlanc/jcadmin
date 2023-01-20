@@ -131,7 +131,7 @@ function InitDatabase(filename) {
 }
 
 function GetName(number) {
-    return database.data.callername[number] || '';
+    return database.data.callername[number] || number;
 }
 
 function SetName(number, name) {
