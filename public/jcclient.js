@@ -4,6 +4,8 @@
     https://github.com/cosinekitty/jcadmin
 */
 
+const SPLIT_UNNAMED_NUMBERS = true;
+
 ;(function(){
     'use strict';
 
@@ -191,8 +193,8 @@
     }
 
     function SetTargetStatus(numberStatus, callidStatus) {
-        document.getElementById('TargetNumberRow').className = BlockStatusClassName(numberStatus);
-        document.getElementById('TargetCallerIdRow').className = BlockStatusClassName(callidStatus);
+        document.getElementById('TargetNumberRow').className = `row fs-5 bg-${BlockStatusClassName(numberStatus)}-subtle`;
+        document.getElementById('TargetCallerIdRow').className = `row fs-5 bg-${BlockStatusClassName(callidStatus)}-subtle`;
     }
 
     function IsPhoneNumber(pattern) {
@@ -292,7 +294,11 @@
         return SanitizeSpaces(PrevPoll.callerid.data.names[number]) ||
                SanitizeSpaces(PrevPoll.safe.data.table[number]) ||
                SanitizeSpaces(PrevPoll.blocked.data.table[number]) ||
-               SanitizeSpaces(number);
+            SanitizeSpaces(
+                SPLIT_UNNAMED_NUMBERS ?
+                    number.split('').reduce((prev, curr) => `${prev}${curr}${prev[prev.length - 1] == ' ' ? '' : ' '}`) :
+                    number
+            );
     }
 
     function CallerId(number) {
@@ -429,7 +435,7 @@
         callerCell.setAttribute('colspan', '2');
         if (call.number !== '') {
             callerCell.textContent = CallerDisplayName(call.number);
-            callerCell.className = BlockStatusClassName(CallerStatus(call));
+            callerCell.className = `table-${BlockStatusClassName(CallerStatus(call))}`;
             callerCell.onclick = function() {
                 SetTargetCall(call, null);
             }
@@ -438,7 +444,7 @@
     }
 
     function BlockStatusClassName(status) {
-        return {safe:'table-success', blocked:'table-danger'}[status] || 'table-primary';
+        return {safe:'success', blocked:'danger'}[status] || 'primary';
     }
 
     function ZeroPad(n) {
@@ -584,7 +590,7 @@
         }
 
         iconCell.appendChild(icon);
-        iconCell.className = BlockStatusClassName(status);
+        iconCell.className = `table-${BlockStatusClassName(status)}`;
         return iconCell;
     }
 
@@ -637,7 +643,7 @@
             var call = recent[i];
             var calldate = call.when && call.when.substr(0, 10);
             call.count = PrevPoll.callerid.data.count[call.number] || '?';
-            var callStatusClassName = BlockStatusClassName(call.status);
+            var callStatusClassName = `table-${BlockStatusClassName(call.status)}`;
 
             var row = document.createElement('tr');
             if (prevdate && calldate && (prevdate !== calldate)) {
@@ -856,17 +862,17 @@
 
             var countCell = document.createElement('td');
             countCell.textContent = entry.count;
-            countCell.className = `${BlockStatusClassName(detail.status)} CallCountColumn table-primary text-center`;
+            countCell.className = `table-${BlockStatusClassName(detail.status)} CallCountColumn table-primary text-center`;
             row.appendChild(countCell);
 
             var numberCell = document.createElement('td');
             numberCell.textContent = entry.number;
-            numberCell.className = BlockStatusClassName(detail.numberStatus);
+            numberCell.className = `table-${BlockStatusClassName(detail.numberStatus)}`;
             row.appendChild(numberCell);
 
             var nameCell = document.createElement('td');
             nameCell.textContent = entry.name;
-            nameCell.className = BlockStatusClassName(detail.callidStatus);
+            nameCell.className = `table-${BlockStatusClassName(detail.callidStatus)}`;
             row.appendChild(nameCell);
 
             row.setAttribute('data-phone-number', entry.number);

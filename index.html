@@ -18,7 +18,7 @@
         <div class="container" id="CreateEditNumberDiv">
             <div class="NavSection row row-cols-auto justify-content-between align-items-center">
                 <div class="col">
-                    <button class="btn btn-link" id="CancelCreateEditButton">
+                    <button class="btn btn-link fs-4" id="CancelCreateEditButton">
                         <i class="bi-chevron-left align-middle"></i>
                         <span class="align-text-top">Back</span>
                     </button>
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="TargetTable row row-cols-auto">
+            <div class="entry-form row row-cols-auto">
                 <label for="NumberEditBox" class="col col-form-label col-form-label-lg">Number:</label>
                 <div class="col">
                     <input id="NumberEditBox" class="form-control form-control-lg" type="tel" value="" size="16" maxlength="15" />
@@ -43,27 +43,32 @@
         </div>
 
         <!-- TargetCallDiv shows detailed information about a particular caller and allows editing that caller. -->
-        <div class="row" id="TargetCallDiv">
-            <div class="NavSection">
-                <span id="BackToListButton" class="NavButton">&laquo;&nbsp;Back</span>
+        <div class="container" id="TargetCallDiv">
+            <div class="NavSection row row-cols-auto justify-content-between align-items-center">
+                <div class="col">
+                    <button class="btn btn-link fs-4" id="BackToListButton">
+                        <i class="bi-chevron-left align-middle"></i>
+                        <span class="align-text-top">Back</span>
+                    </button>
+                </div>
             </div>
 
-            <table class="TargetTable" border="0">
-                <tr id="TargetNumberRow">
-                    <td>Number:</td>
-                    <td><div id="TargetNumberDiv"></div></td>
-                </tr>
-
-                <tr id="TargetCallerIdRow">
-                    <td>CID:</td>
-                    <td><div id="TargetCallerIdDiv"></div></td>
-                </tr>
-
-                <tr id="TargetNameRow">
-                    <td>Name:</td>
-                    <td><input id="TargetNameEditBox" class="EditBox" type="text" value="" size="20" maxlength="80"></td>
-                </tr>
-            </table>
+            <div class="row fs-5" id="TargetNumberRow">
+                <div class="col-3">Number:</div>
+                <div class="col" id="TargetNumberDiv"></div>
+            </div>
+            
+            <div class="row fs-5" id="TargetCallerIdRow">
+                <div class="col-3">CID:</div>
+                <div class="col" id="TargetCallerIdDiv"></div>
+            </div>
+            
+            <div class="row fs-5">
+                <label for="TargetNameEditBox" class="col-3 col-form-label">Name:</label>
+                <div class="col">
+                    <input id="TargetNameEditBox" class="form-control" type="text" value="" size="20" maxlength="80">
+                </div>
+            </div>
 
             <div class="NavSection">
                 <form action="">

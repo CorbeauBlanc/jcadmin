@@ -34,14 +34,18 @@ table.table tbody>tr:last-child>td:last-child {
     border-bottom-right-radius: 1rem;
 }
 
-#CancelCreateEditButton {
-	font-size: 1.5em;
-}
-
-#CreateEditNumberDiv .NavSection.row {
+.NavSection.row {
 	padding-top: 1.5rem;
 	padding-bottom: 0.5rem;
 	border-bottom: 1px solid
+}
+
+#TargetCallDiv > .row {
+	padding: 1rem 0;
+}
+
+#TargetCallDiv > .NavSection.row:first-child {
+	margin-bottom: 1.5rem;
 }
 
 .SettingsTitle {
@@ -59,7 +63,7 @@ table.table tbody>tr:last-child>td:last-child {
     border-color: transparent;
 }
 
-.TargetTable {
+.entry-form {
     padding: 1.5rem;
 }
 
@@ -68,10 +72,6 @@ table.table tbody>tr:last-child>td:last-child {
     color: blue;
     text-align: center;
     font-family: monospace;
-}
-
-.EditBox {
-    font-size: 18px;
 }
 
 .IconColumn {
