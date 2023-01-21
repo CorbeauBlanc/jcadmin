@@ -1,3 +1,8 @@
+| Foreword: |
+|:---|
+| <br/>This repository is a fork of cosinekitty's jcadmin : https://github.com/cosinekitty/jcadmin <br/><br/> My goal here is to make it a bit prettier and cleaner using bootstrap and modern css, and fixing a few bugs here and there.<br/>I changed as little js as I could (except for the previously mentionned bugs) as the focus was primarily on the style. The screenshots in the README have been updated for the new version.<br/>A french version is also available on the `master-french` branch<br/>Dark-mode is on by default but you can change it by setting `<html data-bs-theme="light">` instead of `dark` in index.html.<br/>But let's be honnest, why would you do that? |
+
+
 # jcadmin
 A web-based interface to administrate Walter S. Heath's [jcblock](http://jcblock.sourceforge.net) junk call blocker program.
 
@@ -14,13 +19,12 @@ See the [Installation](https://github.com/cosinekitty/jcadmin/wiki/Installation)
 
 - Home screen displays a list of recent calls.
 
-![Call history](https://raw.githubusercontent.com/cosinekitty/jcadmin/master/screenshots/jcadmin-home.png "Call history")
+![Call history](https://github.com/CorbeauBlanc/jcadmin/raw/master/screenshots/jcadmin-home.png "Call history")
 
 - Click on any call to see detailed info about that caller.
 
-![Caller details](https://raw.githubusercontent.com/cosinekitty/jcadmin/master/screenshots/jcadmin-detail.png "Detail page")
+![Caller details](https://github.com/CorbeauBlanc/jcadmin/raw/master/screenshots/jcadmin-detail.png "Detail page")
 
 - Sortable phone book shows known callers.
 
-![Phone book](https://raw.githubusercontent.com/cosinekitty/jcadmin/master/screenshots/jcadmin-phonebook.png "Phone book")
-
+![Phone book](https://github.com/CorbeauBlanc/jcadmin/raw/master/screenshots/jcadmin-phonebook.png "Phone book")
