@@ -4,7 +4,7 @@
     https://github.com/cosinekitty/jcadmin
 */
 
-const SPLIT_UNNAMED_NUMBERS = true;
+const SPLIT_UNNAMED_NUMBERS = false;
 
 ;(function(){
     'use strict';
