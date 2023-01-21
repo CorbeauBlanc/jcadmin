@@ -1,4 +1,4 @@
-table.table {
+#RecentCallsDiv table.table, #PhoneBookDiv table.table {
     margin-top: 3rem;
 }
 
@@ -6,7 +6,11 @@ table.table thead {
     font-size: 1.5rem;
 }
 
-table.table thead i[class^="bi"], table.table tbody tr, #PhoneBookDiv table.table thead th {
+#RecentCallsDiv table.table thead i[class^="bi"],
+#RecentCallsDiv table.table tbody tr,
+#PhoneBookDiv table.table thead i[class^="bi"],
+#PhoneBookDiv table.table tbody tr,
+#PhoneBookDiv table.table thead th {
     cursor: pointer;
 }
 
@@ -42,6 +46,7 @@ table.table tbody>tr:last-child>td:last-child {
 
 #TargetCallDiv > .row {
 	padding: 1rem 0;
+	font-size: 1.25rem;
 }
 
 #TargetCallDiv > .NavSection.row:first-child {

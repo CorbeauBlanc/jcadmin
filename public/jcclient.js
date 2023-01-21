@@ -193,8 +193,8 @@ const SPLIT_UNNAMED_NUMBERS = true;
     }
 
     function SetTargetStatus(numberStatus, callidStatus) {
-        document.getElementById('TargetNumberRow').className = `row fs-5 bg-${BlockStatusClassName(numberStatus)}-subtle`;
-        document.getElementById('TargetCallerIdRow').className = `row fs-5 bg-${BlockStatusClassName(callidStatus)}-subtle`;
+        document.getElementById('TargetNumberRow').className = `row bg-${BlockStatusClassName(numberStatus)}-subtle`;
+        document.getElementById('TargetCallerIdRow').className = `row bg-${BlockStatusClassName(callidStatus)}-subtle`;
     }
 
     function IsPhoneNumber(pattern) {
@@ -268,10 +268,15 @@ const SPLIT_UNNAMED_NUMBERS = true;
     function AppendCallDateTimesTable(hdiv, deleteButton, history) {
         if (history.length > 0) {
             var table = document.createElement('table');
-            table.className = 'TargetTable';
-            table.appendChild(CallDateTimeHeader());
+            var tbody = document.createElement('tbody');
+            var thead = document.createElement('thead');
+
+            table.className = 'table table-striped';
+            table.appendChild(thead);
+            table.appendChild(tbody)
+            thead.appendChild(CallDateTimeHeader());
             for (var i=0; i < history.length; ++i) {
-                table.appendChild(CallDateTimeRow(history.length - i, history[i]));
+                tbody.appendChild(CallDateTimeRow(history.length - i, history[i]));
             }
             hdiv.appendChild(table);
         } else {

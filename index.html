@@ -38,8 +38,7 @@
                 </div>
             </div>
 
-            <div class="row" id="PhoneBookDiv">
-            </div>
+            <div class="row" id="PhoneBookDiv"></div>
         </div>
 
         <!-- TargetCallDiv shows detailed information about a particular caller and allows editing that caller. -->
@@ -53,46 +52,50 @@
                 </div>
             </div>
 
-            <div class="row fs-5" id="TargetNumberRow">
+            <div class="row" id="TargetNumberRow">
                 <div class="col-3">Number:</div>
                 <div class="col" id="TargetNumberDiv"></div>
             </div>
             
-            <div class="row fs-5" id="TargetCallerIdRow">
+            <div class="row" id="TargetCallerIdRow">
                 <div class="col-3">CID:</div>
                 <div class="col" id="TargetCallerIdDiv"></div>
             </div>
             
-            <div class="row fs-5">
+            <div class="row">
                 <label for="TargetNameEditBox" class="col-3 col-form-label">Name:</label>
                 <div class="col">
                     <input id="TargetNameEditBox" class="form-control" type="text" value="" size="20" maxlength="80">
                 </div>
             </div>
 
-            <div class="NavSection">
-                <form action="">
-                    <div class="NavSection NavButton">
-                        <input type="radio" name="TargetStatus" value="Safe" id="TargetRadioButtonSafe">
-                        <label for="TargetRadioButtonSafe">Safe</label>
-                    </div>
+            <div class="row justify-content-evenly mt-5 mb-5">
+                <input type="radio" class="btn-check" name="TargetStatus" value="Safe" id="TargetRadioButtonSafe">
+                <label class="col-2 btn btn-outline-success" for="TargetRadioButtonSafe">
+                    <i class="bi-check-circle-fill me-2"></i>
+                    Safe
+                </label>
 
-                    <div class="NavSection NavButton">
-                        <input type="radio" name="TargetStatus" value="Neutral" id="TargetRadioButtonNeutral">
-                        <label for="TargetRadioButtonNeutral">Neutral</label>
-                    </div>
+                <input type="radio" class="btn-check" name="TargetStatus" value="Neutral" id="TargetRadioButtonNeutral">
+                <label class="btn col-2 btn-outline-primary" for="TargetRadioButtonNeutral">
+                    <i class="bi-question-circle-fill me-2"></i>
+                    Neutral
+                </label>
 
-                    <div class="NavSection NavButton">
-                        <input type="radio" name="TargetStatus" value="Blocked" id="TargetRadioButtonBlocked">
-                        <label for="TargetRadioButtonBlocked">Blocked</label>
-                    </div>
-                </form>
+                <input type="radio" class="btn-check" name="TargetStatus" value="Blocked" id="TargetRadioButtonBlocked">
+                <label class="col-2 btn btn-outline-danger" for="TargetRadioButtonBlocked">
+                    <i class="bi-x-circle-fill me-2"></i>
+                    Blocked
+                </label>
             </div>
 
-            <div id="TargetHistoryDiv"></div>
+            <div class="row" id="TargetHistoryDiv"></div>
 
-            <div class="NavSection">
-                <span id="DeleteTargetButton" class="NavButton">Delete this entry</span>
+            <div class="row mt-5 mb-5">
+                <button id="DeleteTargetButton" class="col-2 btn btn-danger">
+                    <i class="bi-trash-fill me-2"></i>
+                    Delete this entry
+                </button>
             </div>
         </div>
 
