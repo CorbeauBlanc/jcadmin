@@ -4,6 +4,8 @@
     https://github.com/cosinekitty/jcadmin
 */
 
+const SPLIT_UNNAMED_NUMBERS = true;
+
 ;(function(){
     'use strict';
 
@@ -71,13 +73,14 @@
     };
 
     var HistoryDisplayModeIndex = 0;
+    var HistoryDisplayModeClassRing = ['bi-telephone-inbound-fill', 'bi-check-circle-fill', 'bi-x-circle-fill', 'bi-question-circle-fill'];
     var HistoryDisplayModeRing = ['all', 'safe', 'blocked', 'neutral'];
 
     function HistoryDisplayModeIcon() {
         // Choose which icon to display in the upper left corner
         // of the history page, depending on which mode the user
         // has selected by clicking on that icon.
-        return HistoryDisplayModeRing[HistoryDisplayModeIndex] + '.png';
+        return HistoryDisplayModeClassRing[HistoryDisplayModeIndex];
     }
 
     function CycleHistoryDisplayMode() {
@@ -190,8 +193,8 @@
     }
 
     function SetTargetStatus(numberStatus, callidStatus) {
-        document.getElementById('TargetNumberRow').className = BlockStatusClassName(numberStatus);
-        document.getElementById('TargetCallerIdRow').className = BlockStatusClassName(callidStatus);
+        document.getElementById('TargetNumberRow').className = `row bg-${BlockStatusClassName(numberStatus)}-subtle`;
+        document.getElementById('TargetCallerIdRow').className = `row bg-${BlockStatusClassName(callidStatus)}-subtle`;
     }
 
     function IsPhoneNumber(pattern) {
@@ -218,12 +221,12 @@
 
         var dowCell = document.createElement('th');
         dowCell.className = 'HistoryColumn';
-        dowCell.textContent = 'DOW';
+        dowCell.textContent = 'Jour';
         row.appendChild(dowCell);
 
         var timeCell = document.createElement('th');
         timeCell.className = 'HistoryColumn';
-        timeCell.textContent = 'Time';
+        timeCell.textContent = 'Heure';
         row.appendChild(timeCell);
 
         var dateCell = document.createElement('th');
@@ -256,7 +259,7 @@
 
         var dateCell = document.createElement('td');
         dateCell.className = 'HistoryColumn';
-        dateCell.textContent = p.year + '-' + ZeroPad(p.month,2) + '-' + ZeroPad(p.day,2);
+        dateCell.textContent = p.day + '/' + ZeroPad(p.month, 2) + '/' + ZeroPad(p.year,2);
         row.appendChild(dateCell);
 
         return row;
@@ -265,14 +268,19 @@
     function AppendCallDateTimesTable(hdiv, deleteButton, history) {
         if (history.length > 0) {
             var table = document.createElement('table');
-            table.className = 'TargetTable';
-            table.appendChild(CallDateTimeHeader());
+            var tbody = document.createElement('tbody');
+            var thead = document.createElement('thead');
+
+            table.className = 'table table-striped';
+            table.appendChild(thead);
+            table.appendChild(tbody)
+            thead.appendChild(CallDateTimeHeader());
             for (var i=0; i < history.length; ++i) {
-                table.appendChild(CallDateTimeRow(history.length - i, history[i]));
+                tbody.appendChild(CallDateTimeRow(history.length - i, history[i]));
             }
             hdiv.appendChild(table);
         } else {
-            hdiv.textContent = 'No calls have been received from this phone number.';
+            hdiv.textContent = 'Aucun appel n\'a été reçu de ce numéro.';
             deleteButton.style.display = '';   // caller has hidden the delete button, but now we know item can be deleted.
         }
     }
@@ -291,7 +299,11 @@
         return SanitizeSpaces(PrevPoll.callerid.data.names[number]) ||
                SanitizeSpaces(PrevPoll.safe.data.table[number]) ||
                SanitizeSpaces(PrevPoll.blocked.data.table[number]) ||
-               SanitizeSpaces(number);
+            SanitizeSpaces(
+                SPLIT_UNNAMED_NUMBERS ?
+                    number.split('').reduce((prev, curr) => `${prev}${curr}${prev[prev.length - 1] == ' ' ? '' : ' '}`) :
+                    number
+            );
     }
 
     function CallerId(number) {
@@ -360,7 +372,7 @@
         }
 
         deleteButton.onclick = function() {
-            if (window.confirm('Delete entry?')) {
+            if (window.confirm('Supprimer l\'entrée ?')) {
                 ApiDelete('/api/caller/' + encodeURIComponent(call.number), function(){
                     PopActiveDiv();
                 });
@@ -428,7 +440,7 @@
         callerCell.setAttribute('colspan', '2');
         if (call.number !== '') {
             callerCell.textContent = CallerDisplayName(call.number);
-            callerCell.className = BlockStatusClassName(CallerStatus(call));
+            callerCell.className = `table-${BlockStatusClassName(CallerStatus(call))}`;
             callerCell.onclick = function() {
                 SetTargetCall(call, null);
             }
@@ -437,7 +449,7 @@
     }
 
     function BlockStatusClassName(status) {
-        return {safe:'SafeCall', blocked:'BlockedCall'}[status] || 'NeutralCall';
+        return {safe:'success', blocked:'danger'}[status] || 'primary';
     }
 
     function ZeroPad(n) {
@@ -547,7 +559,7 @@
             var hour  = parseInt(m[4], 10);
             var min   = parseInt(m[5], 10);
             var date = new Date(year, month-1, day, hour, min);
-            var dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
+            var dow = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'][date.getDay()];
             return {
                 date: date,
                 year: year,
@@ -569,12 +581,21 @@
 
     function IconCellForStatus(status) {
         var iconCell = document.createElement('td');
-        var iconImg = document.createElement('img');
-        iconImg.setAttribute('src', status + '.png');
-        iconImg.setAttribute('width', '24');
-        iconImg.setAttribute('height', '24');
-        iconCell.appendChild(iconImg);
-        iconCell.className = BlockStatusClassName(status);
+        var icon = document.createElement('i');
+        switch (status) {
+            case 'safe':
+                icon.className = 'bi-check-circle-fill text-success';
+                break;
+            case 'blocked':
+                icon.className = 'bi-x-circle-fill text-danger';
+                break;
+            default :
+                icon.className = 'bi-question-circle-fill text-primary';
+                break;
+        }
+
+        iconCell.appendChild(icon);
+        iconCell.className = `table-${BlockStatusClassName(status)}`;
         return iconCell;
     }
 
@@ -582,41 +603,37 @@
         var rowlist = [];
         var recent = PrevPoll.callerid.data.calls;
         var table = document.createElement('table');
-        table.setAttribute('class', 'RecentCallTable');
+        table.className = 'RecentCallTable table table-hover align-middle';
 
         var thead = document.createElement('thead');
         var hrow = document.createElement('tr');
 
         var hcell_icon = document.createElement('th');
         hcell_icon.className = 'IconColumn';
-        var toggleIconImage = document.createElement('img');
-        toggleIconImage.setAttribute('src', HistoryDisplayModeIcon());
-        toggleIconImage.setAttribute('width', '24');
-        toggleIconImage.setAttribute('height', '24');
-        hcell_icon.appendChild(toggleIconImage);
+        var toggleIcon = document.createElement('i');
+        toggleIcon.className = HistoryDisplayModeIcon();
+        hcell_icon.appendChild(toggleIcon);
         hcell_icon.onclick = function() {
             // Cycle through the next display mode.
             CycleHistoryDisplayMode();
-            toggleIconImage.setAttribute('src', HistoryDisplayModeIcon());
+            toggleIcon.className = HistoryDisplayModeIcon();
             UpdateRowDisplay(rowlist);
         }
         hrow.appendChild(hcell_icon);
 
         var hcell_when = document.createElement('th');
-        hcell_when.appendChild(document.createTextNode('When'));
+        hcell_when.appendChild(document.createTextNode('Quand'));
         hrow.appendChild(hcell_when);
 
         var hcell_name = document.createElement('th');
-        hcell_name.appendChild(document.createTextNode('Caller'));
+        hcell_name.appendChild(document.createTextNode('Appelant'));
         hcell_name.className = 'CallerColumn';
         hrow.appendChild(hcell_name);
 
         var hcell_new = document.createElement('th');
         hcell_new.className = 'IconColumn';
-        var newIcon = document.createElement('img');
-        newIcon.setAttribute('src', 'new.png');
-        newIcon.setAttribute('width', '24');
-        newIcon.setAttribute('height', '24');
+        var newIcon = document.createElement('i');
+        newIcon.className = 'bi-journal-x';
         hcell_new.appendChild(newIcon);
         hcell_new.onclick = CreateNewCaller;
         hrow.appendChild(hcell_new);
@@ -631,7 +648,7 @@
             var call = recent[i];
             var calldate = call.when && call.when.substr(0, 10);
             call.count = PrevPoll.callerid.data.count[call.number] || '?';
-            var callStatusClassName = BlockStatusClassName(call.status);
+            var callStatusClassName = `table-${BlockStatusClassName(call.status)}`;
 
             var row = document.createElement('tr');
             if (prevdate && calldate && (prevdate !== calldate)) {
@@ -672,7 +689,7 @@
     function SortableColumnText(label, sortfunc) {
         if (sortfunc === PhoneNumbersInOrder) {
             // Put an arrow on this column to indicate that we are sorting by it.
-            var arrow = (PhoneBookSortDirection > 0) ? '&dArr;' : '&uArr;';
+            var arrow = (PhoneBookSortDirection > 0) ? '▼' : '▲';
             return label + '&nbsp;' + arrow;
         }
         return label;
@@ -754,11 +771,14 @@
         TryToCreateEditNumber(number);
     }
 
-    var PhoneBookStatusFilter = ['all', 'safe', 'neutral', 'blocked'];
+    var PhoneBookStatusFilter = HistoryDisplayModeRing;
+    var PhoneBookStatusFilterClass = [...HistoryDisplayModeClassRing];
     var PhoneBookStatusFilterIndex = 0;
+    PhoneBookStatusFilterClass.shift();
+    PhoneBookStatusFilterClass.unshift('bi-journal-x');
 
     function UpdateFilterIcon(toggleIconImage) {
-        toggleIconImage.setAttribute('src', PhoneBookStatusFilter[PhoneBookStatusFilterIndex] + '.png');
+        toggleIconImage.className = PhoneBookStatusFilterClass[PhoneBookStatusFilterIndex];
     }
 
     function UpdatePhoneBookRowDisplay(rowlist) {
@@ -788,37 +808,39 @@
         var book = SortedPhoneBook();
         var phoneBookDiv = document.getElementById('PhoneBookDiv');
         var table = document.createElement('table');
+        table.className = 'table table-hover align-middle';
         ClearElement(phoneBookDiv);
         phoneBookDiv.appendChild(table);
 
+        var thead = document.createElement('thead')
+        table.appendChild(thead);
+
         var hrow = document.createElement('tr');
-        table.appendChild(hrow);
+        thead.appendChild(hrow);
 
         var hStatusCell = document.createElement('th');
         hStatusCell.className = 'IconColumn';
-        var toggleIconImage = document.createElement('img');
-        UpdateFilterIcon(toggleIconImage);
-        toggleIconImage.setAttribute('width', '24');
-        toggleIconImage.setAttribute('height', '24');
-        hStatusCell.appendChild(toggleIconImage);
+        var toggleIcon = document.createElement('i');
+        UpdateFilterIcon(toggleIcon);
+        hStatusCell.appendChild(toggleIcon);
         hStatusCell.onclick = function() {
             // Cycle through status filters for displaying different subsets of rows.
             PhoneBookStatusFilterIndex = (1 + PhoneBookStatusFilterIndex) % PhoneBookStatusFilter.length;
-            UpdateFilterIcon(toggleIconImage);
+            UpdateFilterIcon(toggleIcon);
             UpdatePhoneBookRowDisplay(rowlist);
         }
         hrow.appendChild(hStatusCell);
 
         var hCountCell = document.createElement('th');
         hCountCell.className = 'CallCountColumn';
-        hCountCell.innerHTML = SortableColumnText('Calls', PhoneNumbersInOrder_ByCallCount);
+        hCountCell.innerHTML = SortableColumnText('Appels', PhoneNumbersInOrder_ByCallCount);
         hCountCell.onclick = function() {
             SetPhoneBookSort(PhoneNumbersInOrder_ByCallCount);
         }
         hrow.appendChild(hCountCell);
 
         var hNumberCell = document.createElement('th');
-        hNumberCell.innerHTML = SortableColumnText('Number', PhoneNumbersInOrder_ByNumber);
+        hNumberCell.innerHTML = SortableColumnText('Numéro', PhoneNumbersInOrder_ByNumber);
         hNumberCell.onclick = function() {
             SetPhoneBookSort(PhoneNumbersInOrder_ByNumber);
         }
@@ -826,11 +848,14 @@
 
         var hNameCell = document.createElement('th');
         hNameCell.className = 'CallerColumn';
-        hNameCell.innerHTML = SortableColumnText('Name', PhoneNumbersInOrder_ByName);
+        hNameCell.innerHTML = SortableColumnText('Nom', PhoneNumbersInOrder_ByName);
         hNameCell.onclick = function() {
             SetPhoneBookSort(PhoneNumbersInOrder_ByName);
         }
         hrow.appendChild(hNameCell);
+
+        var tbody = document.createElement('tbody');
+        table.appendChild(tbody);
 
         for (var i=0; i < book.length; ++i) {
             var entry = book[i];
@@ -844,23 +869,23 @@
 
             var countCell = document.createElement('td');
             countCell.textContent = entry.count;
-            countCell.className = 'CallCountColumn';
+            countCell.className = `table-${BlockStatusClassName(detail.status)} CallCountColumn table-primary text-center`;
             row.appendChild(countCell);
 
             var numberCell = document.createElement('td');
             numberCell.textContent = entry.number;
-            numberCell.className = BlockStatusClassName(detail.numberStatus);
+            numberCell.className = `table-${BlockStatusClassName(detail.numberStatus)}`;
             row.appendChild(numberCell);
 
             var nameCell = document.createElement('td');
             nameCell.textContent = entry.name;
-            nameCell.className = BlockStatusClassName(detail.callidStatus);
+            nameCell.className = `table-${BlockStatusClassName(detail.callidStatus)}`;
             row.appendChild(nameCell);
 
             row.setAttribute('data-phone-number', entry.number);
             row.onclick = OnPhoneBookRowClicked;
 
-            table.appendChild(row);
+            tbody.appendChild(row);
             rowlist.push(row);
         }
 

@@ -12,6 +12,8 @@ var express = require('express');
 var app = express();
 var logprefix = require('log-prefix');
 
+const SPLIT_UNNAMED_NUMBERS = true;
+
 function ZeroPad(n, d) {
     var s = '' + n;
     while (s.length < d) {
@@ -131,7 +133,8 @@ function InitDatabase(filename) {
 }
 
 function GetName(number) {
-    return database.data.callername[number] || number;
+	return database.data.callername[number]
+		|| SPLIT_UNNAMED_NUMBERS ? number.split('').reduce((prev, curr) => `${prev}${curr}${prev[prev.length - 1] == ' ' ? '' : ' '}`) : number;
 }
 
 function SetName(number, name) {

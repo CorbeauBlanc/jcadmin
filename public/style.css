@@ -1,40 +1,64 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
+html, body {
+	height: 100%;
 }
 
-th {
-    background: #333;
-    color: white;
-    font-weight: bold;
+#RecentCallsDiv table.table, #PhoneBookDiv table.table {
+    margin-top: 3rem;
 }
 
-td, th {
-    padding: 6px;
-    border: 1px solid #ccc;
-    text-align: left;
+table.table thead {
+    font-size: 1.5rem;
 }
 
-.SafeCall {
-    background: #bfb;
+#RecentCallsDiv table.table thead i[class^="bi"],
+#RecentCallsDiv table.table tbody tr,
+#PhoneBookDiv table.table thead i[class^="bi"],
+#PhoneBookDiv table.table tbody tr,
+#PhoneBookDiv table.table thead th {
+    cursor: pointer;
 }
 
-.BlockedCall {
-    background: #fbb;
+table.table tbody {
+    font-size: 1.1rem;
 }
 
-.NeutralCall {
-    background: #eee;
+table.table tbody i[class^="bi"] {
+    font-size: 1.5rem;
 }
 
-.NavButton {
-    font-size: x-large;
-    font-family: sans-serif;
-    color: blue;
+table.table tbody > tr:first-child > td:first-child {
+    border-top-left-radius: 1rem;
 }
 
-.RightButton {
-    float: right;
+table.table tbody>tr:first-child>td:last-child {
+    border-top-right-radius: 1rem;
+}
+
+table.table tbody>tr:last-child>td:first-child {
+    border-bottom-left-radius: 1rem;
+}
+
+table.table tbody>tr:last-child>td:last-child {
+    border-bottom-right-radius: 1rem;
+}
+
+#LostContactDiv, #LostContactDiv .row {
+	height: 100%;
+}
+
+.NavSection.row {
+	padding-top: 1.5rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid
+}
+
+#TargetCallDiv > .row {
+	padding: 1rem 0;
+	font-size: 1.25rem;
+}
+
+#TargetCallDiv > .NavSection.row:first-child {
+	margin-bottom: 1.5rem;
 }
 
 .SettingsTitle {
@@ -52,15 +76,8 @@ td, th {
     border-color: transparent;
 }
 
-.NavSection {
-    border-style: solid;
-    border-width: 10px;
-    border-color: transparent;
-}
-
-.TargetTable {
-    font-size: x-large;
-    font-family: monospace;
+.entry-form {
+    padding: 1.5rem;
 }
 
 .CurrentDateTime {
@@ -68,10 +85,6 @@ td, th {
     color: blue;
     text-align: center;
     font-family: monospace;
-}
-
-.EditBox {
-    font-size: 18px;
 }
 
 .IconColumn {
@@ -105,6 +118,6 @@ td, th {
 }
 
 .NewDateRow {
-    border-top: 2px solid #888;
+    border-top: 13px solid var(--bs-body-bg);
 }
 
