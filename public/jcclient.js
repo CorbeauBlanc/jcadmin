@@ -772,8 +772,10 @@ const SPLIT_UNNAMED_NUMBERS = true;
     }
 
     var PhoneBookStatusFilter = HistoryDisplayModeRing;
-    var PhoneBookStatusFilterClass = HistoryDisplayModeClassRing;
+    var PhoneBookStatusFilterClass = [...HistoryDisplayModeClassRing];
     var PhoneBookStatusFilterIndex = 0;
+    PhoneBookStatusFilterClass.shift();
+    PhoneBookStatusFilterClass.unshift('bi-journal-x');
 
     function UpdateFilterIcon(toggleIconImage) {
         toggleIconImage.className = PhoneBookStatusFilterClass[PhoneBookStatusFilterIndex];
