@@ -15,21 +15,27 @@
         <div class="row" id="RecentCallsDiv"></div>
 
         <!-- CreateEditNumberDiv allows manual entry of phone numbers. Also displays phone book. -->
-        <div id="CreateEditNumberDiv">
-            <div class="NavSection row">
-                <span id="CancelCreateEditButton" class="NavButton">&laquo;&nbsp;Back</span>
-                <span id="SettingsButton" class="NavButton RightButton">Settings&nbsp;&raquo;</span>
+        <div class="container" id="CreateEditNumberDiv">
+            <div class="NavSection row row-cols-auto justify-content-between align-items-center">
+                <div class="col">
+                    <button class="btn btn-link" id="CancelCreateEditButton">
+                        <i class="bi-chevron-left align-middle"></i>
+                        <span class="align-text-top">Back</span>
+                    </button>
+                </div>
+                <div class="col text-end">
+                    <button class="btn btn-primary col" id="SettingsButton">Settings<i class="bi-gear-fill ms-2"></i></button>
+                </div>
             </div>
 
-            <table class="TargetTable row">
-                <tr>
-                    <td>Number:</td>
-                    <td><input id="NumberEditBox" class="EditBox" type="tel" value="" size="16" maxlength="15"></td>
-                </tr>
-            </table>
-
-            <div class="NavSection">
-                <span id="TryCreateEditButton" class="NavButton">Create/Edit&nbsp;&raquo;</span>
+            <div class="TargetTable row row-cols-auto">
+                <label for="NumberEditBox" class="col col-form-label col-form-label-lg">Number:</label>
+                <div class="col">
+                    <input id="NumberEditBox" class="form-control form-control-lg" type="tel" value="" size="16" maxlength="15" />
+                </div>
+                <div class="col">
+                    <button id="TryCreateEditButton" class="btn btn-success">Create/Edit&nbsp;&raquo;</button>
+                </div>
             </div>
 
             <div class="row" id="PhoneBookDiv">

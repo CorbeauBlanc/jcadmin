@@ -34,14 +34,14 @@ table.table tbody>tr:last-child>td:last-child {
     border-bottom-right-radius: 1rem;
 }
 
-.NavButton {
-    font-size: x-large;
-    font-family: sans-serif;
-    color: blue;
+#CancelCreateEditButton {
+	font-size: 1.5em;
 }
 
-.RightButton {
-    float: right;
+#CreateEditNumberDiv .NavSection.row {
+	padding-top: 1.5rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid
 }
 
 .SettingsTitle {
@@ -59,15 +59,8 @@ table.table tbody>tr:last-child>td:last-child {
     border-color: transparent;
 }
 
-.NavSection {
-    border-style: solid;
-    border-width: 10px;
-    border-color: transparent;
-}
-
 .TargetTable {
-    font-size: x-large;
-    font-family: monospace;
+    padding: 1.5rem;
 }
 
 .CurrentDateTime {
