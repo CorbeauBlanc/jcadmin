@@ -12,7 +12,7 @@ var express = require('express');
 var app = express();
 var logprefix = require('log-prefix');
 
-const SPLIT_UNNAMED_NUMBERS = false;
+const SPLIT_UNNAMED_NUMBERS = true;
 
 function ZeroPad(n, d) {
     var s = '' + n;

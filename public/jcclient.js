@@ -4,7 +4,7 @@
     https://github.com/cosinekitty/jcadmin
 */
 
-const SPLIT_UNNAMED_NUMBERS = false;
+const SPLIT_UNNAMED_NUMBERS = true;
 
 ;(function(){
     'use strict';
@@ -221,12 +221,12 @@ const SPLIT_UNNAMED_NUMBERS = false;
 
         var dowCell = document.createElement('th');
         dowCell.className = 'HistoryColumn';
-        dowCell.textContent = 'DOW';
+        dowCell.textContent = 'Jour';
         row.appendChild(dowCell);
 
         var timeCell = document.createElement('th');
         timeCell.className = 'HistoryColumn';
-        timeCell.textContent = 'Time';
+        timeCell.textContent = 'Heure';
         row.appendChild(timeCell);
 
         var dateCell = document.createElement('th');
@@ -259,7 +259,7 @@ const SPLIT_UNNAMED_NUMBERS = false;
 
         var dateCell = document.createElement('td');
         dateCell.className = 'HistoryColumn';
-        dateCell.textContent = p.year + '-' + ZeroPad(p.month,2) + '-' + ZeroPad(p.day,2);
+        dateCell.textContent = p.day + '/' + ZeroPad(p.month, 2) + '/' + ZeroPad(p.year,2);
         row.appendChild(dateCell);
 
         return row;
@@ -280,7 +280,7 @@ const SPLIT_UNNAMED_NUMBERS = false;
             }
             hdiv.appendChild(table);
         } else {
-            hdiv.textContent = 'No calls have been received from this phone number.';
+            hdiv.textContent = 'Aucun appel n\'a été reçu de ce numéro.';
             deleteButton.style.display = '';   // caller has hidden the delete button, but now we know item can be deleted.
         }
     }
@@ -372,7 +372,7 @@ const SPLIT_UNNAMED_NUMBERS = false;
         }
 
         deleteButton.onclick = function() {
-            if (window.confirm('Delete entry?')) {
+            if (window.confirm('Supprimer l\'entrée ?')) {
                 ApiDelete('/api/caller/' + encodeURIComponent(call.number), function(){
                     PopActiveDiv();
                 });
@@ -559,7 +559,7 @@ const SPLIT_UNNAMED_NUMBERS = false;
             var hour  = parseInt(m[4], 10);
             var min   = parseInt(m[5], 10);
             var date = new Date(year, month-1, day, hour, min);
-            var dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
+            var dow = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'][date.getDay()];
             return {
                 date: date,
                 year: year,
@@ -622,11 +622,11 @@ const SPLIT_UNNAMED_NUMBERS = false;
         hrow.appendChild(hcell_icon);
 
         var hcell_when = document.createElement('th');
-        hcell_when.appendChild(document.createTextNode('When'));
+        hcell_when.appendChild(document.createTextNode('Quand'));
         hrow.appendChild(hcell_when);
 
         var hcell_name = document.createElement('th');
-        hcell_name.appendChild(document.createTextNode('Caller'));
+        hcell_name.appendChild(document.createTextNode('Appelant'));
         hcell_name.className = 'CallerColumn';
         hrow.appendChild(hcell_name);
 
@@ -833,14 +833,14 @@ const SPLIT_UNNAMED_NUMBERS = false;
 
         var hCountCell = document.createElement('th');
         hCountCell.className = 'CallCountColumn';
-        hCountCell.innerHTML = SortableColumnText('Calls', PhoneNumbersInOrder_ByCallCount);
+        hCountCell.innerHTML = SortableColumnText('Appels', PhoneNumbersInOrder_ByCallCount);
         hCountCell.onclick = function() {
             SetPhoneBookSort(PhoneNumbersInOrder_ByCallCount);
         }
         hrow.appendChild(hCountCell);
 
         var hNumberCell = document.createElement('th');
-        hNumberCell.innerHTML = SortableColumnText('Number', PhoneNumbersInOrder_ByNumber);
+        hNumberCell.innerHTML = SortableColumnText('Numéro', PhoneNumbersInOrder_ByNumber);
         hNumberCell.onclick = function() {
             SetPhoneBookSort(PhoneNumbersInOrder_ByNumber);
         }
@@ -848,7 +848,7 @@ const SPLIT_UNNAMED_NUMBERS = false;
 
         var hNameCell = document.createElement('th');
         hNameCell.className = 'CallerColumn';
-        hNameCell.innerHTML = SortableColumnText('Name', PhoneNumbersInOrder_ByName);
+        hNameCell.innerHTML = SortableColumnText('Nom', PhoneNumbersInOrder_ByName);
         hNameCell.onclick = function() {
             SetPhoneBookSort(PhoneNumbersInOrder_ByName);
         }
