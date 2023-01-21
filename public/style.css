@@ -1,3 +1,7 @@
+html, body {
+	height: 100%;
+}
+
 #RecentCallsDiv table.table, #PhoneBookDiv table.table {
     margin-top: 3rem;
 }
@@ -36,6 +40,10 @@ table.table tbody>tr:last-child>td:first-child {
 
 table.table tbody>tr:last-child>td:last-child {
     border-bottom-right-radius: 1rem;
+}
+
+#LostContactDiv, #LostContactDiv .row {
+	height: 100%;
 }
 
 .NavSection.row {

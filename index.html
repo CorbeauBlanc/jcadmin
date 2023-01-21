@@ -10,138 +10,132 @@
     <script src="jcclient.js"></script>
 </head>
 <body>
-    <div class="container">
-        <!-- RecentCallsDiv holds a script-generated table of caller ID history. -->
-        <div class="row" id="RecentCallsDiv"></div>
+    <!-- RecentCallsDiv holds a script-generated table of caller ID history. -->
+    <div class="container" id="RecentCallsDiv"></div>
 
-        <!-- CreateEditNumberDiv allows manual entry of phone numbers. Also displays phone book. -->
-        <div class="container" id="CreateEditNumberDiv">
-            <div class="NavSection row row-cols-auto justify-content-between align-items-center">
-                <div class="col">
-                    <button class="btn btn-link fs-4" id="CancelCreateEditButton">
-                        <i class="bi-chevron-left align-middle"></i>
-                        <span class="align-text-top">Back</span>
-                    </button>
-                </div>
-                <div class="col text-end">
-                    <button class="btn btn-primary col" id="SettingsButton">Settings<i class="bi-gear-fill ms-2"></i></button>
-                </div>
+    <!-- CreateEditNumberDiv allows manual entry of phone numbers. Also displays phone book. -->
+    <div class="container" id="CreateEditNumberDiv">
+        <div class="NavSection row row-cols-auto justify-content-between align-items-center">
+            <div class="col">
+                <button class="btn btn-link fs-4" id="CancelCreateEditButton">
+                    <i class="bi-chevron-left align-middle"></i>
+                    <span class="align-text-top">Back</span>
+                </button>
             </div>
-
-            <div class="entry-form row row-cols-auto">
-                <label for="NumberEditBox" class="col col-form-label col-form-label-lg">Number:</label>
-                <div class="col">
-                    <input id="NumberEditBox" class="form-control form-control-lg" type="tel" value="" size="16" maxlength="15" />
-                </div>
-                <div class="col">
-                    <button id="TryCreateEditButton" class="btn btn-lg btn-success">Create / Edit<i class="bi-pencil-fill ms-3"></i></button>
-                </div>
+            <div class="col text-end">
+                <button class="btn btn-primary col" id="SettingsButton">Settings<i class="bi-gear-fill ms-2"></i></button>
             </div>
-
-            <div class="row" id="PhoneBookDiv"></div>
         </div>
 
-        <!-- TargetCallDiv shows detailed information about a particular caller and allows editing that caller. -->
-        <div class="container" id="TargetCallDiv">
-            <div class="NavSection row row-cols-auto justify-content-between align-items-center">
-                <div class="col">
-                    <button class="btn btn-link fs-4" id="BackToListButton">
-                        <i class="bi-chevron-left align-middle"></i>
-                        <span class="align-text-top">Back</span>
-                    </button>
-                </div>
+        <div class="entry-form row row-cols-auto">
+            <label for="NumberEditBox" class="col col-form-label col-form-label-lg">Number:</label>
+            <div class="col">
+                <input id="NumberEditBox" class="form-control form-control-lg" type="tel" value="" size="16" maxlength="15" />
             </div>
-
-            <div class="row" id="TargetNumberRow">
-                <div class="col-3">Number:</div>
-                <div class="col" id="TargetNumberDiv"></div>
+            <div class="col">
+                <button id="TryCreateEditButton" class="btn btn-lg btn-success">Create / Edit<i class="bi-pencil-fill ms-3"></i></button>
             </div>
-            
-            <div class="row" id="TargetCallerIdRow">
-                <div class="col-3">CID:</div>
-                <div class="col" id="TargetCallerIdDiv"></div>
-            </div>
-            
-            <div class="row">
-                <label for="TargetNameEditBox" class="col-3 col-form-label">Name:</label>
-                <div class="col">
-                    <input id="TargetNameEditBox" class="form-control" type="text" value="" size="20" maxlength="80">
-                </div>
-            </div>
+        </div>
 
-            <div class="row justify-content-evenly mt-5 mb-5">
-                <input type="radio" class="btn-check" name="TargetStatus" value="Safe" id="TargetRadioButtonSafe">
-                <label class="col-2 btn btn-outline-success" for="TargetRadioButtonSafe">
-                    <i class="bi-check-circle-fill me-2"></i>
-                    Safe
-                </label>
+        <div class="row" id="PhoneBookDiv"></div>
+    </div>
 
-                <input type="radio" class="btn-check" name="TargetStatus" value="Neutral" id="TargetRadioButtonNeutral">
-                <label class="btn col-2 btn-outline-primary" for="TargetRadioButtonNeutral">
-                    <i class="bi-question-circle-fill me-2"></i>
-                    Neutral
-                </label>
-
-                <input type="radio" class="btn-check" name="TargetStatus" value="Blocked" id="TargetRadioButtonBlocked">
-                <label class="col-2 btn btn-outline-danger" for="TargetRadioButtonBlocked">
-                    <i class="bi-x-circle-fill me-2"></i>
-                    Blocked
-                </label>
-            </div>
-
-            <div class="row" id="TargetHistoryDiv"></div>
-
-            <div class="row mt-5 mb-5">
-                <button id="DeleteTargetButton" class="col-2 btn btn-danger">
-                    <i class="bi-trash-fill me-2"></i>
-                    Delete this entry
+    <!-- TargetCallDiv shows detailed information about a particular caller and allows editing that caller. -->
+    <div class="container" id="TargetCallDiv">
+        <div class="NavSection row row-cols-auto justify-content-between align-items-center">
+            <div class="col">
+                <button class="btn btn-link fs-4" id="BackToListButton">
+                    <i class="bi-chevron-left align-middle"></i>
+                    <span class="align-text-top">Back</span>
                 </button>
             </div>
         </div>
 
-        <!-- SettingsDiv allows user to configure client-side settings. -->
-        <div class="row" id="SettingsDiv">
-            <div class="NavSection">
-                <div class="NavSection">
-                    <span id="SettingsBackButton" class="NavButton">&laquo;&nbsp;Back</span>
-                </div>
+        <div class="row" id="TargetNumberRow">
+            <div class="col-3">Number:</div>
+            <div class="col" id="TargetNumberDiv"></div>
+        </div>
+        
+        <div class="row" id="TargetCallerIdRow">
+            <div class="col-3">CID:</div>
+            <div class="col" id="TargetCallerIdDiv"></div>
+        </div>
+        
+        <div class="row">
+            <label for="TargetNameEditBox" class="col-3 col-form-label">Name:</label>
+            <div class="col">
+                <input id="TargetNameEditBox" class="form-control" type="text" value="" size="20" maxlength="80">
             </div>
-
-            <hr>
-
-            <div>
-                <div class="SettingsTitle">Call History Limit</div>
-
-                <form action="">
-                    <div class="SettingsButton">
-                        <input type="radio" name="HistoryLimit" value="30" id="HistoryLimitButton1">
-                        <label for="HistoryLimit">30</label>
-                    </div>
-
-                    <div class="SettingsButton">
-                        <input type="radio" name="HistoryLimit" value="100" id="HistoryLimitButton2">
-                        <label for="HistoryLimit">100</label>
-                    </div>
-
-                    <div class="SettingsButton">
-                        <input type="radio" name="HistoryLimit" value="500" id="HistoryLimitButton3">
-                        <label for="HistoryLimit">500</label>
-                    </div>
-
-                    <div class="SettingsButton">
-                        <input type="radio" name="HistoryLimit" value="1000000000" id="HistoryLimitButton4">
-                        <label for="HistoryLimit">All</label>
-                    </div>
-                </form>
-            </div>
-
-            <hr>
         </div>
 
-        <!-- LostContactDiv is displayed while we are unable to communicate with the jcadmin server. -->
-        <div id="LostContactDiv" class="LostContact row">
-            <h1>Lost Contact with Server</h1>
-            <div><img src="offline.png" width="128" height="128"></div>
+        <div class="row justify-content-evenly mt-5 mb-5">
+            <input type="radio" class="btn-check" name="TargetStatus" value="Safe" id="TargetRadioButtonSafe">
+            <label class="col-2 btn btn-outline-success" for="TargetRadioButtonSafe">
+                <i class="bi-check-circle-fill me-2"></i>
+                Safe
+            </label>
+
+            <input type="radio" class="btn-check" name="TargetStatus" value="Neutral" id="TargetRadioButtonNeutral">
+            <label class="btn col-2 btn-outline-primary" for="TargetRadioButtonNeutral">
+                <i class="bi-question-circle-fill me-2"></i>
+                Neutral
+            </label>
+
+            <input type="radio" class="btn-check" name="TargetStatus" value="Blocked" id="TargetRadioButtonBlocked">
+            <label class="col-2 btn btn-outline-danger" for="TargetRadioButtonBlocked">
+                <i class="bi-x-circle-fill me-2"></i>
+                Blocked
+            </label>
+        </div>
+
+        <div class="row" id="TargetHistoryDiv"></div>
+
+        <div class="row mt-5 mb-5">
+            <button id="DeleteTargetButton" class="col-2 btn btn-danger">
+                <i class="bi-trash-fill me-2"></i>
+                Delete this entry
+            </button>
+        </div>
+    </div>
+
+    <!-- SettingsDiv allows user to configure client-side settings. -->
+    <div class="container" id="SettingsDiv">
+        <div class="NavSection row row-cols-auto justify-content-between align-items-center">
+            <div class="col">
+                <button class="btn btn-link fs-4" id="SettingsBackButton">
+                    <i class="bi-chevron-left align-middle"></i>
+                    <span class="align-text-top">Back</span>
+                </button>
+            </div>
+        </div>
+        <div class="row row-cols-auto mt-5">
+            <h4 class="col-12 mb-4">Call History Limit:</h4>
+            <div class="col fs-5">
+                <input class="form-check-input" type="radio" name="HistoryLimit" value="30" id="HistoryLimitButton1">
+                <label class="form-check-label" for="HistoryLimit">30</label>
+            </div>
+            <div class="col fs-5">
+                <input class="form-check-input" type="radio" name="HistoryLimit" value="100" id="HistoryLimitButton2">
+                <label class="form-check-label" for="HistoryLimit">100</label>
+            </div>
+            <div class="col fs-5">
+                <input class="form-check-input" type="radio" name="HistoryLimit" value="500" id="HistoryLimitButton3">
+                <label class="form-check-label" for="HistoryLimit">500</label>
+            </div>
+            <div class="col fs-5">
+                <input class="form-check-input" type="radio" name="HistoryLimit" value="1000000000" id="HistoryLimitButton4">
+                <label class="form-check-label" for="HistoryLimit">All</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- LostContactDiv is displayed while we are unable to communicate with the jcadmin server. -->
+    <div class="container" id="LostContactDiv">
+        <div class="row justify-content-center align-items-center text-center">
+            <div class="col-12">
+                <h1>Lost Contact with Server</h1>
+                <i class="bi-cloud-slash" style="font-size: 5rem;"></i>
+            </div>
         </div>
     </div>
 </body>
